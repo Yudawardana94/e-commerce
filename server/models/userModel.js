@@ -1,52 +1,63 @@
 const mongoose = require('mongoose');
 const cartModel = require('./historyModel')
-const { emailRegex } = require('../helpers/emailValidator');
-const { hash } = require('../helpers/bcrypt');
+const {
+	emailRegex
+} = require('../helpers/emailValidator');
+const {
+	hash
+} = require('../helpers/bcrypt');
 
 let userSchema = new mongoose.Schema({
 	username: {
 		type: String,
-		required: true,
+		required: [true, 'No username'],
 	},
 	email: {
 		type: String,
-		required: true,
-		validate: [
-			{
-				validator: function(val) {
+		required: [true, 'No email'],
+		validate: [{
+				validator: function (val) {
 					if (!emailRegex(val)) {
-						throw { status: 400, message: 'Invalid format Email. ' };
+						return false;
 					}
 				},
+				message: 'Invalid email format. '
 			},
 			{
-				validator: function(val, next) {
-					User.findOne({
-						email: val,
+				validator: function (val) {
+					return new Promise((resolve, reject) => {
+						User.findOne({
+								email: val,
+							})
+							.then(found => {
+								console.log(found, '========')
+								if (found) {
+									console.log('disini nggak??')
+									resolve(false)
+								} else {
+									console.log()
+									resolve(true)
+								}
+							})
+							.catch(err => {
+								console.log(err)
+							})
 					})
-						.then(found => {
-							if (found) {
-								throw { status: 400, message: `Email has been Used. ` };
-							} else {
-								next();
-							}
-						})
-						.catch(err => {
-							throw { status: 500, message: `Internal server error. ` };
-						});
 				},
+				message: 'Email has been used. '
 			},
 		],
 	},
 	password: {
 		type: String,
-		required: true,
+		required: [true, 'No password'],
+		minlength: [8, 'Minimum password is 8']
 	},
-	role : String,
+	role: String,
 	cart: Array
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
 	this.password = hash(this.password);
 	next();
 });

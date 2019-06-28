@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV === 'dev' || !process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'dev' || !process.env.NODE_ENV || process.env.NODE_ENV === 'test') {
 	require('dotenv').config();
 }
 
@@ -12,7 +12,7 @@ const errHandler = require('./middleware/errHandler');
 
 const port = process.env.PORT;
 const database = process.env.DB + '' + process.env.DB_NAME;
-console.log(database);
+// console.log(database);
 
 mongoose.connect(database, { useNewUrlParser: true }, err => {
 	if (err) console.log(err), console.log('Connection Error. ');

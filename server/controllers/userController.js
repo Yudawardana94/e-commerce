@@ -1,6 +1,10 @@
 const userModel = require('../models/userModel');
-const { compare } = require('../helpers/bcrypt');
-const { sign } = require('../helpers/jwtoken');
+const {
+	compare
+} = require('../helpers/bcrypt');
+const {
+	sign
+} = require('../helpers/jwtoken');
 
 class UserModel {
 	static register(req, res, next) {
@@ -8,10 +12,10 @@ class UserModel {
 			username: req.body.username,
 			password: req.body.password,
 			email: req.body.email,
-			role: 'Customer',
+			role: req.body.role || 'Customer',
 			cart: [],
 		};
-
+		// console.log(newUser)
 		userModel
 			.create(newUser)
 			.then(created => {
@@ -47,17 +51,27 @@ class UserModel {
 						});
 
 						req.headers.access_token = token;
-						res.status(200).json({ access_token: token });
+						res.status(200).json({
+							access_token: token
+						});
 					} else {
-						throw { status: 400, message: `Invalid email / password. ` };
+						res.status(401)
+							.json({
+								message: `Invalid email / password. `
+							})
 					}
 				} else {
-					throw { status: 404, message: `Invalid email / password. ` };
+					res.status(401)
+							.json({
+								message: `Invalid email / password. `
+							})
 				}
 			})
 			.catch(err => {
 				console.log(err);
-				res.status(500).json(err);
+				res.status(500).json({
+					message: `Internal server Error. `
+				})
 			});
 	}
 }

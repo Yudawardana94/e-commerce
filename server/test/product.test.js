@@ -6,339 +6,339 @@ const app = require('../app')
 chai.use(chaiHttp)
 let expect = chai.expect
 
-describe ('Product CRUD', function() {
-    describe('POST /product/add',function () {
-        describe('Success',function(){
-            it('should send an object with status code 201', function(done) {
+// describe ('Product CRUD', function() {
+    // describe('POST /product/add',function () {
+    //     describe('Success',function(){
+    //         it('should send an object with status code 201', function(done) {
                 
-                chai
-                    .request(app)
-                    .post('/products/add')
-                    .send({
-                        name : 'Gundam',
-                        description : 'Model kit',
-                        price : 300000,
-                        stock : 2,
-                        condition : 'baru',
-                        location : 'jakarta'
-                    })
-                    .then( function (res) {
+    //             chai
+    //                 .request(app)
+    //                 .post('/products/add')
+    //                 .send({
+    //                     name : 'Gundam',
+    //                     description : 'Model kit',
+    //                     price : 300000,
+    //                     stock : 2,
+    //                     condition : 'baru',
+    //                     location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
                         
-                        expect(res).to.have.status(201)
-                        expect(res.body).to.be.an('object')
+    //                     expect(res).to.have.status(201)
+    //                     expect(res.body).to.be.an('object')
 
-                        expect(res.body).to.have.property('name')
-                        expect(res.body).to.have.property('description')
-                        expect(res.body).to.have.property('price')
-                        expect(res.body).to.have.property('stock')
-                        expect(res.body).to.have.property('condition')
-                        expect(res.body).to.have.property('location')
+    //                     expect(res.body).to.have.property('name')
+    //                     expect(res.body).to.have.property('description')
+    //                     expect(res.body).to.have.property('price')
+    //                     expect(res.body).to.have.property('stock')
+    //                     expect(res.body).to.have.property('condition')
+    //                     expect(res.body).to.have.property('location')
                         
-                        expect(res.body.name).to.equal('Gundam')
-                        expect(res.body.description).to.equal('Model kit')
-                        expect(res.body.price).to.equal(300000)
-                        expect(res.body.stock).to.equal(2)
-                        expect(res.body.condition).to.equal('baru')
-                        expect(res.body.location).to.equal('jakarta')
-                        done()
-                    })
-                    .catch(function(err) {
-                        console.log (err)
-                    })
-            })
-        })
-        // describe('Failed / Error',function(){
-        //     it('should send an object with status code 500 -- internal server error', function(done) {
-        //         chai
-        //             .request(app)
-        //             .post('/product/ad')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(500)
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not have property name', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(res.body.name).to.equal('Gundam')
+    //                     expect(res.body.description).to.equal('Model kit')
+    //                     expect(res.body.price).to.equal(300000)
+    //                     expect(res.body.stock).to.equal(2)
+    //                     expect(res.body.condition).to.equal('baru')
+    //                     expect(res.body.location).to.equal('jakarta')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         })
+    //     })
+    //     describe('Failed / Error',function(){
+    //         it('should send an object with status code 500 -- internal server error', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .post('/product/ad')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(500)
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- empty property name', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body).to.not.have.property('Name')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not same name value', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gunda',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body).to.not.have.property('Name')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- different name value', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gunda',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body.Name).to.not.equal('Gundam')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not have property Description', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body.Name).to.not.equal('Gundam')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- empty property Description', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body).to.not.have.property('Description')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not sama Description value', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
-        //                 expect(req.body.Description).to.equal('Model kit')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not have property price', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body).to.not.have.property('Description')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- different Description value', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
+    //                     expect(req.body.Description).to.equal('Model kit')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- empty property price', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body).to.not.have.property('Price')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not same price value', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 30000,
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(201)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body).to.not.have.property('Price')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- different price value', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 30000,
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(201)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body.Price).to.not.equal(300000)
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not have property stock', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body.Price).to.not.equal(300000)
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- empty property stock', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body).to.not.have.property('Stock')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not same stock value', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 1,
-        //                 Condition : 'baru',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(201)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body).to.not.have.property('Stock')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- different stock value', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 1,
+    //                     Condition : 'baru',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(201)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body.Stock).to.not.equal(2)
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not have property condition', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body.Stock).to.not.equal(2)
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- empty property condition', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
                         
-        //                 expect(req.body).to.have.property('Condition')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not same condition value', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'buruk',
-        //                 Location : 'jakarta'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(201)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body).to.have.property('Condition')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- different condition value', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'buruk',
+    //                     Location : 'jakarta'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(201)
+    //                     expect(req.body).to.be.an('object')
                         
-        //                 expect(req.body.Condition).to.equal('baru')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not have property location', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'baru'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(400)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body.Condition).to.equal('baru')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- empty property location', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'baru'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(400)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body).to.not.have.property('Location')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     }),
-        //     it('should send an object with status code 400 -- not have property condition', function(done) {
-        //         chai
-        //             .request(app)
-        //             .toString('/player')
-        //             .send({
-        //                 Name : 'Gundam',
-        //                 Description : 'Model kit',
-        //                 Price : 300000,
-        //                 Stock : 2,
-        //                 Condition : 'baru',
-        //                 Location : 'bandung'
-        //             })
-        //             .then( function (res) {
-        //                 expect(res).to.have.status(201)
-        //                 expect(req.body).to.be.an('object')
+    //                     expect(req.body).to.not.have.property('Location')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         }),
+    //         it('should send an object with status code 400 -- different property location value', function(done) {
+    //             chai
+    //                 .request(app)
+    //                 .toString('/player')
+    //                 .send({
+    //                     Name : 'Gundam',
+    //                     Description : 'Model kit',
+    //                     Price : 300000,
+    //                     Stock : 2,
+    //                     Condition : 'baru',
+    //                     Location : 'bandung'
+    //                 })
+    //                 .then( function (res) {
+    //                     expect(res).to.have.status(201)
+    //                     expect(req.body).to.be.an('object')
 
-        //                 expect(req.body.Location).to.not.equal('jakarta')
-        //                 done()
-        //             })
-        //             .catch(function(err) {
-        //                 console.log (err)
-        //             })
-        //     })
-        // })
-    })
+    //                     expect(req.body.Location).to.not.equal('jakarta')
+    //                     done()
+    //                 })
+    //                 .catch(function(err) {
+    //                     console.log (err)
+    //                 })
+    //         })
+    //     })
+    // }),
     // describe('GET /product/all',function() {
     //     describe('Success',function(){
     //         it('Should return an object with status code 200 -- success',function(done) {
@@ -384,6 +384,9 @@ describe ('Product CRUD', function() {
     //         })
     //     })
     // }),
+
+
+
     // describe('GET /product/user',function() {
     //     describe('Success',function(){
     //         it('Should return an object with status code 200 -- success',function(done) {
@@ -429,6 +432,9 @@ describe ('Product CRUD', function() {
     //         })
     //     })
     // }),
+
+
+
     // describe('GET /product/one',function() {
     //     describe('Success',function(){
     //         it('Should return an object with status code 200 -- success',function(done) {
@@ -474,6 +480,9 @@ describe ('Product CRUD', function() {
     //         })
     //     })
     // }),
+
+
+
     // describe('PATCH /product/update/:id',function() {
     //     describe('Success',function(){
     //         it('Should return an object with status code 200 ', function(done) {
@@ -551,6 +560,9 @@ describe ('Product CRUD', function() {
     //         })
     //     })
     // }),
+
+
+
     // describe('DELETE /product/remove',function() {
     //     describe('Success',function(){
     //         it('Should return an object with status code 200 ',function(done) {
@@ -611,5 +623,5 @@ describe ('Product CRUD', function() {
     //         })
     //     })
         
-    // })
-})
+//     })
+// })
