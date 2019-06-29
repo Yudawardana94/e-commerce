@@ -1,4 +1,4 @@
-const productModel = require('../models/productModel');
+const productModel = require('../models/ItemModel');
 
 class ProductController {
 	static findAll(req, res, next) {
@@ -37,7 +37,9 @@ class ProductController {
 					res.status(200).json(found);
 				} else {
 					// throw ({status : 404, message : `Data not Found. `})
-					res.status(404).json({ message: `Data not Found. ` });
+					res.status(404).json({
+						message: `Data not Found. `
+					});
 				}
 			})
 			.catch(err => {
@@ -48,13 +50,13 @@ class ProductController {
 	static create(req, res, next) {
 		let newProduct = {
 			name: req.body.name,
+			image: req.body.image,
+			category: req.body.category,
 			description: req.body.description,
-			price: req.body.price,
 			stock: req.body.stock,
-			condition: req.body.condition,
-			location: req.body.location,
+			price: req.body.price,
+			created: new Date()
 		};
-
 		productModel
 			.create(newProduct)
 			.then(creataed => {
@@ -88,10 +90,10 @@ class ProductController {
 			update.location = req.body.location;
 		}
 
-		// console.log(update)
-
 		productModel
-			.findByIdAndUpdate(productId, update, { new: true })
+			.findByIdAndUpdate(productId, update, {
+				new: true
+			})
 			.then(newUpdate => {
 				res.status(200).json(newUpdate);
 			})
@@ -107,6 +109,7 @@ class ProductController {
 		productModel
 			.findByIdAndDelete(productId)
 			.then(deleted => {
+				console.log('berhasil')
 				res.status(200).jsno(deleted);
 			})
 			.catch(err => {

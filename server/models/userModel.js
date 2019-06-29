@@ -30,12 +30,12 @@ let userSchema = new mongoose.Schema({
 								email: val,
 							})
 							.then(found => {
-								console.log(found, '========')
+								// console.log(found, '========')
 								if (found) {
-									console.log('disini nggak??')
+									// console.log('disini nggak??')
 									resolve(false)
 								} else {
-									console.log()
+									// console.log('lohhkan bener')
 									resolve(true)
 								}
 							})

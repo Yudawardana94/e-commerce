@@ -15,7 +15,9 @@ class UserModel {
 			role: req.body.role || 'Customer',
 			cart: [],
 		};
-		// console.log(newUser)
+		console.log(newUser)
+
+		console.log(req.body)
 		userModel
 			.create(newUser)
 			.then(created => {
@@ -43,16 +45,16 @@ class UserModel {
 					// console.log(foundUser);
 					let compared = compare(loginUser.password, foundUser.password);
 					if (compared) {
-						let token = sign({
+						let payload = sign({
 							_id: foundUser._id,
 							username: foundUser.username,
 							email: foundUser.email,
 							role: foundUser.role,
 						});
 
-						req.headers.access_token = token;
+						req.headers.access_token = payload;
 						res.status(200).json({
-							access_token: token
+							access_token: payload
 						});
 					} else {
 						res.status(401)

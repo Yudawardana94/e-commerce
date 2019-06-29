@@ -1,97 +1,97 @@
-const chai = require('chai')
-const chaiHttp = require ('chai-http')
-const app = require('../app')
+// const chai = require('chai')
+// const chaiHttp = require ('chai-http')
+// const app = require('../app')
 
-let expect = chai.expect
+// let expect = chai.expect
 
-let productId = ''
-let token = ''
-let unauthorizedtoken = ''
+// let productId = ''
+// let token = ''
+// let unauthorizedtoken = ''
 
-const user = require('../models/userModel')
-const item = require('../models/ItemModel')
-const { sign } = require('../helpers/jwtoken')
+// const user = require('../models/userModel')
+// const item = require('../models/ItemModel')
+// const { sign } = require('../helpers/jwtoken')
 
-chai.use(chaiHttp)
+// chai.use(chaiHttp)
 
-before(function(done){
-    console.log('aaaaaa')
-    user.create({
-        username: 'Coba',
-        password: '1234567890',
-        email: 'coba1@mail.com',
-        role: 'Admin'
-    })
-        .then((newUser)=> {
+// before(function(done){
+//     console.log('aaaaaa')
+//     user.create({
+//         username: 'Coba',
+//         password: '1234567890',
+//         email: 'coba1@mail.com',
+//         role: 'Admin'
+//     })
+//         .then((newUser)=> {
             
-            let { _id, username, email, role} = newUser
-            let payload = {
-                id: _id,
-                username,
-                email,
-                role
-            }
-            token = sign(payload)
-            done()
-        })
-        .catch((err)=> {
-            console.log(err)
-            done()
-        })
-})
+//             let { _id, username, email, role} = newUser
+//             let payload = {
+//                 id: _id,
+//                 username,
+//                 email,
+//                 role
+//             }
+//             token = sign(payload)
+//             done()
+//         })
+//         .catch((err)=> {
+//             console.log(err)
+//             done()
+//         })
+// })
 
-after(function(done){
-    user
-    .deleteMany({})
-    .then(() => {})
-    .catch((err)=> { done()
-        console.log(err);
-    })
-})
+// after(function(done){
+//     user
+//     .deleteMany({})
+//     .then(() => {})
+//     .catch((err)=> { done()
+//         console.log(err);
+//     })
+// })
 
-console.log(token, 'ini token')
-console.log(unauthorizedtoken,'ini uansfKJB')
-describe ('Product CRUD', function() {
-    describe('POST /product/add',function () {
-        describe('Success',function(){
-            it('should send an object with status code 201', function(done) {
+// console.log(token, 'ini token')
+// console.log(unauthorizedtoken,'ini uansfKJB')
+// describe ('Product CRUD', function() {
+//     describe('POST /product/add',function () {
+//         describe('Success',function(){
+//             it('should send an object with status code 201', function(done) {
                 
-                chai
-                    .request(app)
-                    .post('/products/add')
-                    .send({
-                        name: 'Unicorn gundam',
-                        image: 'gambar unicorn',
-                        category: 'HG 1/144',
-                        description: 'ini gundam unicorn dengan ukuran 1/144',
-                        stock: 1,
-                        price: 200000
-                    })
-                    .then( function (res) {
-                        console.log(res.body)
-                        expect(res).to.have.status(201)
-                        expect(res.body).to.be.an('object')
+//                 chai
+//                     .request(app)
+//                     .post('/products/add')
+//                     .send({
+//                         name: 'Unicorn gundam',
+//                         image: 'gambar unicorn',
+//                         category: 'HG 1/144',
+//                         description: 'ini gundam unicorn dengan ukuran 1/144',
+//                         stock: 1,
+//                         price: 200000
+//                     })
+//                     .then( function (res) {
+//                         console.log(res.body)
+//                         expect(res).to.have.status(201)
+//                         expect(res.body).to.be.an('object')
 
-                        expect(res.body).to.have.property('name')
-                        expect(res.body).to.have.property('image')
-                        expect(res.body).to.have.property('category')
-                        expect(res.body).to.have.property('description')
-                        expect(res.body).to.have.property('stock')
-                        expect(res.body).to.have.property('price')
+//                         expect(res.body).to.have.property('name')
+//                         expect(res.body).to.have.property('image')
+//                         expect(res.body).to.have.property('category')
+//                         expect(res.body).to.have.property('description')
+//                         expect(res.body).to.have.property('stock')
+//                         expect(res.body).to.have.property('price')
                         
-                        expect(res.body.name).to.equal('Unicorn gundam')
-                        expect(res.body.image).to.equal('gambar unicorn')
-                        expect(res.body.category).to.equal('HG 1/144')
-                        expect(res.body.description).to.equal('ini gundam unicorn dengan ukuran 1/144')
-                        expect(res.body.stock).to.equal(1)
-                        expect(res.body.price).to.equal(200000)
-                        done()
-                    })
-                    .catch(function(err) {
-                        console.log (err)
-                    })
-            })
-        })
+//                         expect(res.body.name).to.equal('Unicorn gundam')
+//                         expect(res.body.image).to.equal('gambar unicorn')
+//                         expect(res.body.category).to.equal('HG 1/144')
+//                         expect(res.body.description).to.equal('ini gundam unicorn dengan ukuran 1/144')
+//                         expect(res.body.stock).to.equal(1)
+//                         expect(res.body.price).to.equal(200000)
+//                         done()
+//                     })
+//                     .catch(function(err) {
+//                         console.log (err)
+//                     })
+//             })
+//         }),
         // describe('Failed / Error',function(){
         //     it('should send an object with status code 500 -- internal server error', function(done) {
         //         chai
@@ -383,7 +383,7 @@ describe ('Product CRUD', function() {
         //             })
         //     })
         // })
-    })
+    // })
     // describe('GET /product/all',function() {
     //     describe('Success',function(){
     //         it('Should return an object with status code 200 -- success',function(done) {
@@ -669,4 +669,4 @@ describe ('Product CRUD', function() {
     //     })
         
 //     })
-})
+// })

@@ -2,7 +2,7 @@ const userModel = require('../models/userModel');
 const { verify } = require('../helpers/jwtoken');
 
 module.exports = {
-	authenticaiton(req, res, next) {
+	authentication(req, res, next) {
 		let token = req.headers.access_token;
 
 		if (!token) {
@@ -16,7 +16,8 @@ module.exports = {
 					if (foundUser === {}) {
 						throw { status: 404, message: `User Not Found` };
 					} else {
-						(req.logedUser = decode), (req.user = token);
+						(req.logedUser = decode), 
+						(req.user = token);
 						next();
 					}
 				})
