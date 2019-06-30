@@ -15,17 +15,17 @@ class UserModel {
 			role: req.body.role || 'Customer',
 			cart: [],
 		};
-		console.log(newUser)
+		// console.log(newUser)
 
-		console.log(req.body)
+		// console.log(req.body)
 		userModel
 			.create(newUser)
 			.then(created => {
-				// console.log(created)
+				console.log(created)
 				res.status(201).json(created);
 			})
 			.catch(err => {
-				// console.log(err)
+				console.log(err)
 				res.status(500).json(err);
 			});
 	}
@@ -42,7 +42,7 @@ class UserModel {
 			})
 			.then(foundUser => {
 				if (foundUser) {
-					// console.log(foundUser);
+					console.log(foundUser);
 					let compared = compare(loginUser.password, foundUser.password);
 					if (compared) {
 						let payload = sign({

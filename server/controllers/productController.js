@@ -50,13 +50,14 @@ class ProductController {
 	static create(req, res, next) {
 		let newProduct = {
 			name: req.body.name,
-			image: req.body.image,
+			image: req.file.cloudStoragePublicUrl,
 			category: req.body.category,
 			description: req.body.description,
 			stock: req.body.stock,
 			price: req.body.price,
 			created: new Date()
 		};
+		console.log(newProduct)
 		productModel
 			.create(newProduct)
 			.then(creataed => {
