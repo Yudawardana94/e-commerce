@@ -1,6 +1,7 @@
 <template>
   <div class="shop">
     <h1>Shop</h1>
+    <router-link/>
     <el-row>
       <el-col id="mainSide" :span="4">
         <div class="grid-content bg-purple-dark">
@@ -25,7 +26,7 @@ export default {
     cardApp,
     sideMenu
   }
-}
+};
 </script>
 
 <style>

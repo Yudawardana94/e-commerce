@@ -7,7 +7,7 @@
           <div class="grid-content bg-purple"></div>
         </el-col>
 
-        <el-col :span="8">
+        <el-col v-if="$store.state.isLogin == false" :span="8">
           <h1>Login</h1>
           <el-card class="box-card">
             <el-form>
@@ -22,7 +22,7 @@
           </el-card>
         </el-col>
 
-        <el-col :span="8">
+        <el-col v-if="$store.state.isLogin == false" :span="8">
           <h1>Register</h1>
           <el-card class="box-card">
             <el-form>
@@ -55,6 +55,7 @@
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -71,29 +72,40 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
       // console.log('masuk login')
       // console.log(this.loginForm)
-      this.$store.dispatch('onLogin',this.loginForm)
-      this.afterLogin()
+      this.$store
+        .dispatch("onLogin", this.loginForm)
+        .then(success => {
+          console.log(success);
+          this.afterLogin();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      // this.afterLogin()
     },
     register() {
       console.log("terjedor");
       console.log(this.registerForm);
       this.$store.dispatch("onRegister", this.registerForm);
     },
-    afterLogin(){
-      if(this.$store.state.isLogin === true){
-        console.log('kesini')
-        this.$router.push('/shop')
-      }
-      else {
-        console.log('ke else')
-        this.$router.push('/about')
+    afterLogin() {
+      if (this.isLogin === true) {
+        console.log("kesini");
+        this.$router.push("/shop");
+      } else {
+        console.log("ke else");
+        this.$router.push("/about");
       }
     }
   },
-  created() {
+  created() {},
+  computed: {
+    ...mapState({
+      isLogin: state => state.isLogin
+    })
   }
 };
 </script>

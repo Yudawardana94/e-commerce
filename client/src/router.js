@@ -5,6 +5,7 @@ import Admin from './views/adminPage.vue'
 import User from './views/userPage.vue'
 import Shop from './views/shop.vue'
 import item from './views/itemPage.vue'
+import myCart from './views/myCart.vue'
 
 Vue.use(Router);
 
@@ -36,11 +37,17 @@ export default new Router({
       path: '/shop',
       name: 'shop',
       component: Shop,
+      children: [
+        {
+          path: ':id',
+          component: item
+        }
+      ]
     },
     {
-      path: '/item/:id',
-      name: 'itemPage',
-      component: item,
+      path: '/myCart',
+      name: 'myCart',
+      component: myCart
     }
   ],
 });

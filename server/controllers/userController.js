@@ -1,4 +1,5 @@
 const userModel = require('../models/userModel');
+
 const {
 	compare
 } = require('../helpers/bcrypt');
@@ -54,7 +55,10 @@ class UserModel {
 
 						req.headers.access_token = payload;
 						res.status(200).json({
-							access_token: payload
+							access_token: payload,
+							username: foundUser.username,
+							email: foundUser.email,
+							role: foundUser.role
 						});
 					} else {
 						res.status(401)
@@ -64,9 +68,9 @@ class UserModel {
 					}
 				} else {
 					res.status(401)
-							.json({
-								message: `Invalid email / password. `
-							})
+						.json({
+							message: `Invalid email / password. `
+						})
 				}
 			})
 			.catch(err => {
@@ -75,6 +79,42 @@ class UserModel {
 					message: `Internal server Error. `
 				})
 			});
+	}
+
+	static findOne(req, res, next) {
+		let email = req.body.email
+		console.log(req.body, 'lohhhh kok bisa?')
+		userModel
+			.findOne({
+				email
+			})
+			.then(found => {
+				console.log(found, 'ini ')
+				res.status(200).json(found)
+			})
+			.catch(err => {
+				console.log(err)
+				res.status(500).json(err)
+			})
+	}
+
+	static update(req, res, nect) {
+		console.log('update')
+		console.log(req.body)
+		userModel
+			.findOneAndUpdate({
+				email: req.body.email
+			}, {
+				cart: req.body.cart
+			})
+			.then((updated) => {
+				console.log(updated)
+				res.status(200).json(updated)
+			})
+			.check((err) => {
+				console.log(err)
+				res.status(500).json(err)
+			})
 	}
 }
 

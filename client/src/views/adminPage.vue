@@ -26,7 +26,7 @@
             </el-form-item>
             <el-upload
               class="upload-demo"
-              action="https://jsonplaceholder.typicode.com/posts/"
+              action="http://localhost:3000/pdoructs/add"
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               :file-list="addItemForm.image"
@@ -35,8 +35,8 @@
               <el-button size="small" type="primary">Click to upload</el-button>
               <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
-            <el-button type="primary" > Upload </el-button>
-            <el-button type="primary" @click="addItem"> Add </el-button>
+            <el-button type="primary">Upload</el-button>
+            <el-button type="primary" @click="addItem">Add</el-button>
           </el-form>
         </div>
       </el-col>
@@ -55,29 +55,42 @@ export default {
         name: "",
         category: "",
         description: "",
-        stock: "",
-        price: "",
+        stock: 0,
+        price: 0,
         image: []
       }
     };
   },
   methods: {
     handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      addItem() {
-          console.log(this.addItemForm)
-          
-      },
-      onLogout() {
-          console.log('masuk logout')
-          localStorage.removeItem('access_token')
-          this.$store.commit('logOut',false)
-          this.$router.push('/')
-      }
+      console.log(file, fileList);
+    },
+    open() {
+      this.$notify.success({
+        title: "Success",
+        message: "Success input new Item. "
+      });
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    addItem() {
+      this.open()
+      console.log(this.addItemForm);
+      this.$store.dispatch("addItem", this.addItemForm);
+      this.addItemForm.name = ''
+      this.addItemForm.description = ''
+      this.addItemForm.category = ''
+      this.addItemForm.stock = 0
+      this.addItemForm.price = 0
+      this.addItemForm.image = []
+    },
+    onLogout() {
+      console.log("masuk logout");
+      localStorage.removeItem("access_token");
+      this.$store.commit("logOut", false);
+      this.$router.push("/");
+    }
   }
 };
 </script>

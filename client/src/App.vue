@@ -1,23 +1,38 @@
 <template>
   <div id="app">
-    <navbarApp/>
+    <navbarApp />
     <router-view />
   </div>
 </template>
 
 <script>
-import navbarApp from './components/navbar'
+import navbarApp from "./components/navbar";
+import ax from "./server";
 
 export default {
   data() {
-    return{
-      
-    }
+    return {
+
+    };
   },
   components: {
     navbarApp
+  },
+  created() {
+    if (localStorage.getItem("access_token")) {
+
+      let data = {
+        isLogin : true,
+        role: localStorage.getItem('role')
+      }
+      // console.log(localStorage.getItem("access_token"), "ini access_token");
+      this.$store.commit("setLogin", data);
+      ax.defaults.headers.common["access_token"] = localStorage.getItem(
+        "access_token"
+      );
+    }
   }
-}
+};
 </script>
 
 <style>

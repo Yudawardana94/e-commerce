@@ -2,17 +2,24 @@
   <el-row>
     <el-col :span="6" v-for="(product,i) in allProduct" :key="i">
       <el-card class="cardThing" :body-style="{ padding: '0px' }">
-        <!-- <img
-          src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-          class="image"
-        /> -->
-        <p> {{ product.image }} </p>
+        <img v-bind:src="product.image" class="image" />
+        <!-- <p> {{ product.image }} </p> -->
         <div style="padding: 14px;">
-          
           <a href="/#">{{ product.name }}</a>
           <div class="bottom clearfix">
-            <p> {{ product.description}} <br><br> {{ product.price }} <br><br> {{ product.stock}} </p>
-            <el-button type="text" class="button">Operating</el-button>
+            <p>
+              Price: {{ product.price }}
+              <br />
+              <br />
+              Stock: {{ product.stock}}
+            </p>
+            <el-button
+              type="text"
+              class="button"
+              v-if="$store.state.role == 'Admin'"
+              @click="deleteItem(product._id)"
+            >DeleteProduct</el-button>
+            <el-button type="text" class="button" @click="addToCart(product._id)">add To Cart</el-button>
           </div>
         </div>
       </el-card>
@@ -23,7 +30,7 @@
 <script>
 import cardApp from "../components/cardShop.vue";
 import sideMenu from "../components/sideMenu.vue";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -38,14 +45,35 @@ export default {
   methods: {
     inputData() {
       console.log("mounted");
+    },
+    open2() {
+      this.$message({
+        message: "Congrats, this is a success message.",
+        type: "success"
+      });
+    },
+    addToCart(id) {
+      this.open2()
+      console.log("add to cart");
+      console.log(id);
+      let sendToCart = {
+        productId: id,
+        ammount: 1
+      };
+      this.$store.dispatch("addToCart", sendToCart);
+    },
+    deleteItem(id) {
+      console.log("want to delete");
+      console.log(id);
+      this.$store.dispatch("deleteItem", id);
     }
   },
   computed: {
-    ...mapState(['allProduct'])
+    ...mapState(["allProduct"])
   },
   created() {
     this.$store.dispatch("readData");
-    this.inputData()
+    this.inputData();
   }
 };
 </script>
@@ -55,8 +83,8 @@ export default {
   color: #999;
 }
 
-.cardThing{
-    margin: 5px;
+.cardThing {
+  margin: 5px;
 }
 
 .bottom {

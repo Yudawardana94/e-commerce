@@ -10,7 +10,7 @@ route.get('/one/:id',productController.product)
 route.use('/',authentication)
 
 // route.get('/user',productController.findUsers)
-route.post('/add',images.multer.single('image'), images.sendUploadToGCS,authorization,productController.create)
+route.post('/add',authorization,productController.create)
 route.patch('/update/:id',authorization,productController.update)
 route.delete('/remove/:id',authorization,productController.remove)
 

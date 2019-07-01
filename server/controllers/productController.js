@@ -50,7 +50,7 @@ class ProductController {
 	static create(req, res, next) {
 		let newProduct = {
 			name: req.body.name,
-			image: req.file.cloudStoragePublicUrl,
+			// image: req.file.cloudStoragePublicUrl,
 			category: req.body.category,
 			description: req.body.description,
 			stock: req.body.stock,
@@ -111,7 +111,8 @@ class ProductController {
 			.findByIdAndDelete(productId)
 			.then(deleted => {
 				console.log('berhasil')
-				res.status(200).jsno(deleted);
+				console.log(deleted,'==>')
+				res.status(200).json(deleted);
 			})
 			.catch(err => {
 				res.status(500).json(err);
