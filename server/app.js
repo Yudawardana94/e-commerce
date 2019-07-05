@@ -10,8 +10,8 @@ const app = express();
 const router = require('./routes');
 const errHandler = require('./middleware/errHandler');
 
-const port = process.env.PORT;
-const database = process.env.DB + '' + process.env.DB_NAME;
+const port = process.env.PORT || 3000;
+const database = process.env.MONGODB_ATLAS
 // console.log(database);
 
 mongoose.connect(database, { useNewUrlParser: true }, err => {
